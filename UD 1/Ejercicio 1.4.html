@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Ejercicio 1.4. Cargar una lista plegable con nombres de imágenes guardadas en el disco y, 
+     cuando se selecciona una de la lista, visualizar esa imagen.-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.4</title>
+</head>
+<body>
+    <h2>Selecciona una imagen:</h2>
+
+    <!-- Lista desplegable con nombres de archivos de imagen -->
+    <select id="imagenes" onchange="mostrarImagen()">
+        <option value="">Selecciona una imagen</option>
+
+    <!-- Estos valores deberían ser rutas válidas a imágenes en tu proyecto -->
+    <option value ="/La roca gritando.jpg">Imagen 1</option>
+    <option value ="/John Cena.webp">Imagen 2</option>
+    <option value ="/Ronnie Coleman.jpg">Imagen 3</option>
+    </select>
+      <div style="margin-top: 20px;">
+    <img id="imagenMostrada" src="" alt="Imagen seleccionada" style="max-width: 300px; display: none;">
+  </div>
+
+  <script>
+    // -----------------------------------------------------
+    // Función que se ejecuta cuando cambia la selección
+    // -----------------------------------------------------
+    function mostrarImagen() {
+
+    // 1. Obtener el valor de la opción seleccionada (ruta de la imagen)
+      const imagen = document.getElementById("imagenes").value;
+
+    // 2. Buscar el elemento <img> en el HTML
+      const imgElement = document.getElementById("imagenMostrada");
+
+    // 3. Si se seleccionó una imagen válida (no está vacío)
+      if (imagen) {
+
+        // Asignamos la ruta al atributo 'src' para mostrar la imagen
+        imgElement.src = imagen;
+        
+          // Mostrar el <img> en pantalla (por si estaba oculto)
+        imgElement.style.display = "block";
+
+      } else {
+          // Si no se eligió ninguna imagen, ocultamos el elemento
+        imgElement.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Ejercicio 1.5. Crear una página con un texto y dos listas plegables:
+    - Una lista indica si el texto se pone en negrita o no.
+    - La otra lista indica si el texto se pone en cursiva o no.-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <!-- Texto que se va a modificar con las listas desplegables -->
+    <p id="miTexto">Este es un texto modificable</p>
+    
+    <!-- Lista desplegable para aplicar negrita al texto -->
+    <label>Negrita:</label>
+    <select id="negrita" onchange="actualizarEstilo()">
+        <option value="normal">No</option> <!-- Normal = sin negrita -->
+        <option value="normal">Si</option> <!-- Bold = negrita -->
+    </select>
+
+    <!-- Lista desplegable para aplicar cursiva al texto -->
+    <label>Cursiva:</label>
+    <select id="negrita" onchange="actualizarEstilo()">
+        <option value="normal">No</option> <!-- Normal = sin cursiva -->
+        <option value="normal">Si</option> <!-- Italic = cursiva -->
+    </select>
+
+    <script>
+        // Función que se ejecuta cada vez que se cambia una de las listas
+        function actualizarEstilo() {
+
+        // 1. Obtener el valor de la lista de negrita
+        const negrita = document.getElementById("negrita").value;
+
+        // 2. Obtener el valor de la lista de cursiva
+        const cursiva = document.getElementById("cursiva").value;
+
+        // 3. Obtener el elemento <p> que vamos a modificar
+        const texto = document.getElementById("miTexto");
+
+        // 4. Aplicar el estilo de negrita
+        texto.style.fontWeight = bold; // 'normal' o 'bold'
+
+        // 5. Aplicar el estilo de cursiva
+        texto.style.fontStyle = italic; // 'normal' o 'italic'
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Ejercicio 1.2. Seleccionar de una lista plegada un color y mostrarlo por la consola. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.2</title>
+</head>
+<body>
+    <h2>Elige un color:</h2>
+
+    <!-- Lista desplegable de colores -->
+    <select id="colores" onchange="mostrarColor()">
+
+    <!-- Esta opción no tiene valor, es solo un marcador -->
+    <option value="">Selecciona un color</option>
+
+    <!-- Cada opción tiene un valor (value) que representa un color -->
+    <option value="Rojo">Rojo</option>
+    <option value="Verde">Verde</option>
+    <option value="Azul">Azul</option>
+    <option value="Amarillo">Amarillo</option>
+
+    </select>
+
+    <script>
+        // ------------------------------------------------
+        // Función que se ejecuta cuando cambias la opción
+        // ------------------------------------------------
+        function mostrarColor() {
+
+        // 1. Obtenemos el valor seleccionado en la lista
+        // document.getElementById("colores") accede al <select>
+        // .value obtiene el valor de la opción seleccionada
+            const colorSeleccionado = document.getElementById("colores").value;
+
+        // 2. Mostramos ese valor en la consola del navegador
+        // Esto no se ve en la página, solo en las herramientas de desarrollador
+            console.log("Color seleccionado:", colorSeleccionado);
+        }
+    </script>
+</body>
+</html>

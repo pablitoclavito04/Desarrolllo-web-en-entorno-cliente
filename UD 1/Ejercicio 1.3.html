@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Ejercicio 1.3. Solicitar en un <input> un texto y mostrarlo en una capa <div> pulsando sobre un botón. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.3t</title>
+</head>
+<body>
+     <!-- Campo donde el usuario escribe un texto -->
+    <input type="text" id="textoInput" placeholder="Escribe algo...">
+
+    <!-- Botón que al hacer clic ejecutará la función mostrarTexto() -->
+    <button onclick="mostrarTexto()">Mostrar</button>
+
+    <!-- div donde se mostrará el texto ingresado -->
+    <div id="resultado" style="margin-top: 10px;"></div>
+
+    <script>
+        // --------------------------------------------------
+        // Función que llamamos cuando se hace clic en el botón
+        // --------------------------------------------------
+        function mostrarTexto() {
+
+        // 1. Obtenemos el valor del input
+        // Usamos .value para capturar lo que el usuario escribió
+        const texto = document.getElementById("textoInput").value;
+
+        // 2. Buscamos el div donde queremos mostrar el texto
+        // Usamos .textContent para establecer el contenido del div
+        const divResultado = document.getElementById("resultado").textContent = texto;
+
+
+
+        }
+
+    </script>
+    
+</body>
+</html>

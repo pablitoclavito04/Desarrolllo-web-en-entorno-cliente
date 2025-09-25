@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Ejercicio 1.1.  Solicitar un dato por pantalla en una ventana emergente y 
+    mostrarlo como contenido de un párrafo <p> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.1</title>
+</head>
+<body>
+     <!-- Este párrafo mostrará el texto ingresado -->
+    <p id="MiParrafo"></p>
+
+    <script>
+        // -------------------------------
+        // 1. Pedimos un texto al usuario
+        // -------------------------------
+        // 'prompt()' abre una ventana emergente con un campo de texto.
+        // Lo que escriba el usuario se guarda en la variable 'dato' 
+        const dato = prompt("Ingresar texto");
+
+        // --------------------------------------
+        // 2. Buscamos el elemento <p> por su ID
+        // --------------------------------------
+        // 'document.getElementById("miParrafo")' busca el párrafo con ID "miParrafo"
+        // Este es el elemento al que queremos cambiarle el contenido.
+        document.getElementById("MiParrafo").textContent = dato;
+    </script>
+</body>
+</html>
