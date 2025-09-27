@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.2 - Las 10 Tablas de Multiplicar</title>
+</head>
+<body>
+    <h1>Las 10 Tablas de Multiplicar</h1>
+    
+    <div id="tablas-container"> <!-- Aquí se mostrarán las tablas --> </div>
+
+    <script>
+        // 1. Obtener el contenedor donde pondremos las tablas
+        const contenedor = document.getElementById('tablas-container');
+        
+        // 2. Bucle PRINCIPAL: para cada tabla del 1 al 10
+        for (let numeroTabla = 1; numeroTabla <= 10; numeroTabla++) {
+            
+            // 3. Crear un título para esta tabla
+            contenedor.innerHTML += `<h2>Tabla del ${numeroTabla}</h2>`;
+            
+            // 4. Crear una lista para los resultados
+            contenedor.innerHTML += "<ul>";
+            
+            // 5. Bucle SECUNDARIO: para cada multiplicador del 0 al 10
+            for (let multiplicador = 0; multiplicador <= 10; multiplicador++) {
+                
+                // 6. Calcular el resultado de la multiplicación
+                let resultado = numeroTabla * multiplicador;
+                
+                // 7. Añadir esta operación a la lista
+                contenedor.innerHTML += `<li>${numeroTabla} x ${multiplicador} = ${resultado}</li>`;
+            }
+            
+            // 8. Cerrar la lista
+            contenedor.innerHTML += "</ul>";
+            
+            // 9. Añadir un espacio entre tablas
+            contenedor.innerHTML += "<br>";
+        }
+        
+        // 10. También mostrar en la CONSOLA del navegador
+        console.log("=== 10 TABLAS DE MULTIPLICAR ===");
+        
+        // 11. Bucle para las tablas en consola
+        for (let tabla = 1; tabla <= 10; tabla++) {
+            console.log(`--- Tabla del ${tabla} ---`);
+            
+            // 12. Bucle para las operaciones en consola
+            for (let i = 0; i <= 10; i++) {
+                console.log(`${tabla} x ${i} = ${tabla * i}`);
+            }
+            
+            console.log(""); // Línea vacía para separar
+        }
+    </script>
+</body>
+</html>

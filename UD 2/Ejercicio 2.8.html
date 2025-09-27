@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.8</title>
+</head>
+<body>
+    <h1>Comparador de Números</h1>
+    <button onclick="comparar()">Indicar cual de los dos números es el mayor y el menor</button>
+    <div id="resultado"></div>
+
+    <script>
+        function comparar() {
+            // Pedir primer número
+            let num1 = prompt("Introduce el primer número:");
+            if (num1 === null || isNaN(num1) || num1.trim() === "") {
+                alert("Primer número no válido");
+                return;
+            }
+            
+            // Pedir segundo número
+            let num2 = prompt("Introduce el segundo número:");
+            if (num2 === null || isNaN(num2) || num2.trim() === "") {
+                alert("Segundo número no válido");
+                return;
+            }
+            
+            // Convertir a números
+            num1 = parseFloat(num1);
+            num2 = parseFloat(num2);
+            let resultado;
+            
+            // Comparar los números
+            if (num1 > num2) {
+                resultado = `El primer número (${num1}) es MAYOR que el segundo (${num2})`;
+            } else if (num1 < num2) {
+                resultado = `El primer número (${num1}) es MENOR que el segundo (${num2})`;
+            } else {
+                resultado = `Los dos números son IGUALES (${num1})`;
+            }
+            
+            // Mostrar resultado
+            alert("COMPARACIÓN:\n" + resultado);
+            
+            document.getElementById('resultado').innerHTML = `
+                <h3>Resultado:</h3>
+                <p>Número 1: <strong>${num1}</strong></p>
+                <p>Número 2: <strong>${num2}</strong></p>
+                <p style="font-size: 18px; font-weight: bold; color: #2196F3;">${resultado}</p>
+                <p>${num1} ${num1 > num2 ? '>' : num1 < num2 ? '<' : '='} ${num2}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

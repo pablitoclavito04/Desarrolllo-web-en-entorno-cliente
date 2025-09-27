@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.3</title>
+</head>
+<body>
+    <h1>Verificar si es Número o Cadena el texto introducido</h1>
+    <button onclick="verificar()">Comenzar</button>
+    <p id="resultado"></p>
+
+    <script>
+        function verificar() {
+            // 1. Pedir texto al usuario
+            let texto = prompt("Introduce un texto:");
+            
+            // 2. Verificar si canceló
+            if (texto === null) {
+                alert("Operación cancelada");
+                document.getElementById('resultado').textContent = "Cancelado por el usuario";
+                return;
+            }
+            
+            // 3. Verificar si está vacío
+            if (texto.trim() === "") {
+                alert("Cadena vacía");
+                document.getElementById('resultado').textContent = "Cadena vacía";
+                return;
+            }
+            
+            // 4. Verificar si es número
+            // Convertir a número y comprobar si no es NaN
+            if (!isNaN(texto) && texto.trim() !== "") {
+                alert("ES UN NÚMERO: " + texto);
+                document.getElementById('resultado').textContent = "Número: " + texto;
+            } else {
+                alert("ES UNA CADENA: " + texto);
+                document.getElementById('resultado').textContent = "Cadena: " + texto;
+            }
+        }
+    </script>
+</body>
+</html>

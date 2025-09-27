@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.10</title>
+</head>
+<body>
+    <h2>Cuadrado de asteriscos 5x5</h2>
+    <pre id="resultado"></pre>
+
+    <script>
+        // Ejercicio 2.10: Cuadrado de asteriscos 5x5
+        let cuadrado = "";
+        const tamaño = 5;
+        
+        // Método 1: Usando bucles for
+        for (let i = 1; i <= tamaño; i++) {
+            for (let j = 1; j <= tamaño; j++) {
+                // Si es la primera o última fila, o primera o última columna -> *
+                if (i === 1 || i === tamaño || j === 1 || j === tamaño) {
+                    cuadrado += "*";
+                } else {
+                    cuadrado += " "; // Espacio en el interior
+                }
+            }
+            cuadrado += "\n"; // Salto de línea después de cada fila
+        }
+        
+        // Mostrar resultado
+        document.getElementById('resultado').textContent = cuadrado;
+        console.log("Cuadrado 5x5:");
+        console.log(cuadrado);
+    </script>
+</body>
+</html>

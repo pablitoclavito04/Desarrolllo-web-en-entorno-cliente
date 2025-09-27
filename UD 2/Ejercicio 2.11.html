@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.11</title>
+    <style>
+        pre {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            line-height: 1.2;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Rombo de asteriscos</h2>
+    <pre id="resultado"></pre>
+
+    <script>
+        // Ejercicio 2.11: Rombo de asteriscos
+        let rombo = "";
+        const filas = 7;
+        const mitad = Math.floor(filas / 2); // 3
+        
+        // Parte superior del rombo (filas 1-4)
+        for (let i = 0; i <= mitad; i++) {
+            // Calcular espacios y asteriscos para cada fila
+            let espacios = mitad - i;
+            let asteriscos = 2 * i + 1;
+            
+            // Construir la línea
+            rombo += " ".repeat(espacios) + "*".repeat(asteriscos) + "\n";
+        }
+        
+        // Parte inferior del rombo (filas 5-7)
+        for (let i = mitad - 1; i >= 0; i--) {
+            let espacios = mitad - i;
+            let asteriscos = 2 * i + 1;
+            
+            rombo += " ".repeat(espacios) + "*".repeat(asteriscos) + "\n";
+        }
+        
+        // Mostrar resultado
+        document.getElementById('resultado').textContent = rombo;
+        console.log("Rombo de 7 filas:");
+        console.log(rombo);
+    </script>
+</body>
+</html>

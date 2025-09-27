@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.7</title>
+</head>
+<body>
+    <h1>Calculadora de Media</h1>
+    <button onclick="calcularMedia()">Leer la media de tres notas</button>
+    <div id="resultado"></div>
+
+    <script>
+        function calcularMedia() {
+            let notas = [];
+            
+            // Pedir 3 notas con validación
+            for (let i = 1; i <= 3; i++) {
+                let notaValida = false;
+                
+                while (!notaValida) {
+                    let nota = prompt(`Introduce la nota ${i} (0-10):`);
+                    
+                    if (nota === null) {
+                        alert("Operación cancelada");
+                        return;
+                    }
+                    
+                    // Validar nota
+                    if (nota.trim() !== "" && !isNaN(nota)) {
+                        let numero = parseFloat(nota);
+                        if (numero >= 0 && numero <= 10) {
+                            notas.push(numero);
+                            notaValida = true;
+                        } else {
+                            alert("La nota debe estar entre 0 y 10");
+                        }
+                    } else {
+                        alert("Introduce un número válido");
+                    }
+                }
+            }
+            
+            // Calcular media
+            let media = (notas[0] + notas[1] + notas[2]) / 3;
+            let estado = media >= 5 ? "APROBADO" : "SUSPENDIDO";
+            
+            // Mostrar resultado
+            alert(`NOTAS: ${notas[0]}, ${notas[1]}, ${notas[2]}\nMEDIA: ${media.toFixed(2)}\n${estado}`);
+            
+            document.getElementById('resultado').innerHTML = `
+                <h3>Resultado:</h3>
+                <p>Notas: ${notas[0]}, ${notas[1]}, ${notas[2]}</p>
+                <p>Media: <strong>${media.toFixed(2)}</strong></p>
+                <p style="color: ${media >= 5 ? 'green' : 'red'}; font-weight: bold;">${estado}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

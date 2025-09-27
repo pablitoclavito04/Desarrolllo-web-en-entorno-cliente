@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.5</title>
+</head>
+<body>
+    <h1>Sumar dos números</h1>
+    <button onclick="sumar()">Comenzar</button>
+    <div id="resultado"></div>
+
+    <script>
+        function sumar() {
+            // Pedir primer número
+            let num1 = prompt("Introduce el primer número:");
+            
+            // Validar si canceló
+            if (num1 === null) {
+                alert("Operación cancelada");
+                return;
+            }
+            
+            // Validar que sea número
+            if (isNaN(num1) || num1.trim() === "") {
+                alert("ERROR: '" + num1 + "' no es un número válido");
+                return;
+            }
+            
+            // Pedir segundo número
+            let num2 = prompt("Introduce el segundo número:");
+            
+            // Validar si canceló
+            if (num2 === null) {
+                alert("Operación cancelada");
+                return;
+            }
+            
+            // Validar que sea número
+            if (isNaN(num2) || num2.trim() === "") {
+                alert("ERROR: '" + num2 + "' no es un número válido");
+                return;
+            }
+            
+            // Convertir a números y sumar
+            let resultado = parseFloat(num1) + parseFloat(num2);
+            
+            // Mostrar resultado
+            alert("RESULTADO: " + num1 + " + " + num2 + " = " + resultado);
+            
+            document.getElementById('resultado').innerHTML = 
+                "<h3>Suma realizada:</h3>" +
+                "<p>" + num1 + " + " + num2 + " = <strong>" + resultado + "</strong></p>";
+        }
+    </script>
+</body>
+</html>

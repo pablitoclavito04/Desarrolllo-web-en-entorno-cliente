@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.1 - Tabla del 5</title>
+</head>
+<body>
+    <h2>Tabla de multiplicar del 5</h2>
+    <script>
+        // Abre una lista no ordenada (<ul>) en el documento HTML
+        document.write("<ul>");
+        
+        // Bucle FOR que se ejecuta 11 veces (desde i=0 hasta i=10)
+        for (let i = 0; i <= 10; i++) {
+            // Para cada iteración, escribe un elemento de lista (<li>) con la operación 5 x i y su resultado
+            // Usa template strings (``) para interpolar variables
+            document.write(`<li>5 x ${i} = ${5 * i}</li>`);
+        }
+        
+        // Cierra la lista no ordenada (</ul>)
+        document.write("</ul>");
+        
+        // SECCIÓN ADICIONAL: Mostrar también en la consola del navegador
+        // También en consola - para verificar los resultados
+        console.log("Tabla del 5:"); // Mensaje inicial en consola
+        
+        // Segundo bucle FOR para mostrar los resultados en la consola
+        for (let i = 0; i <= 10; i++) {
+            // Para cada iteración, muestra la operación en la consola
+            console.log(`5 x ${i} = ${5 * i}`);
+        }
+    </script>
+</body>
+</html>

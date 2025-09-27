@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.6</title>
+</head>
+<body>
+    <h1>Calculadora Simple</h1>
+    <button onclick="calcular()">Comenzar</button>
+    <div id="resultado"></div>
+
+    <script>
+        function calcular() {
+            // Pedir primer número
+            let num1 = prompt("Introduce el primer número:");
+            if (num1 === null || isNaN(num1) || num1.trim() === "") {
+                alert("Primer número no válido");
+                return;
+            }
+            
+            // Pedir segundo número
+            let num2 = prompt("Introduce el segundo número:");
+            if (num2 === null || isNaN(num2) || num2.trim() === "") {
+                alert("Segundo número no válido");
+                return;
+            }
+            
+            // Pedir operación
+            let operacion = prompt("Introduce la operación (+, -, *, /):");
+            if (operacion === null) {
+                alert("Operación cancelada");
+                return;
+            }
+            
+            // Convertir a números
+            num1 = parseFloat(num1);
+            num2 = parseFloat(num2);
+            let resultado;
+            let operacionValida = true;
+            
+            // Realizar operación
+            switch (operacion) {
+                case '+':
+                    resultado = num1 + num2;
+                    break;
+                case '-':
+                    resultado = num1 - num2;
+                    break;
+                case '*':
+                    resultado = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        alert("Error: No se puede dividir por cero");
+                        return;
+                    }
+                    resultado = num1 / num2;
+                    break;
+                default:
+                    alert("Operación incorrecta. Use +, -, * o /");
+                    operacionValida = false;
+                    break;
+            }
+            
+            if (operacionValida) {
+                // Mostrar resultado
+                alert("RESULTADO: " + num1 + " " + operacion + " " + num2 + " = " + resultado);
+                document.getElementById('resultado').innerHTML = 
+                    "<h3>Resultado:</h3><p>" + num1 + " " + operacion + " " + num2 + " = <strong>" + resultado + "</strong></p>";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.4</title>
+</head>
+<body>
+    <h1>Concatenar dos textos</h1>
+    <button onclick="concatenar()">Comenzar</button>
+    <div id="resultado"></div>
+
+    <script>
+        function concatenar() {
+            // 1. Pedir el primer texto
+            let texto1 = prompt("Introduce el primer texto:");
+            
+            // 2. Si cancela el primero, terminar
+            if (texto1 === null) {
+                alert("Cancelaste el primer texto");
+                document.getElementById('resultado').innerHTML = "Operación cancelada";
+                return;
+            }
+            
+            // 3. Pedir el segundo texto
+            let texto2 = prompt("Introduce el segundo texto:");
+            
+            // 4. Si cancela el segundo, terminar
+            if (texto2 === null) {
+                alert("Cancelaste el segundo texto");
+                document.getElementById('resultado').innerHTML = "Operación cancelada";
+                return;
+            }
+            
+            // 5. Concatenar los textos (unirlos)
+            let resultado = texto1 + texto2;
+            
+            // 6. Mostrar resultado con alert
+            alert("Texto 1: " + texto1 + "\nTexto 2: " + texto2 + "\nConcatenado: " + resultado);
+            
+            // 7. Mostrar resultado en la página
+            document.getElementById('resultado').innerHTML = 
+                "<h3>Resultado:</h3>" +
+                "<p>Texto 1: " + texto1 + "</p>" +
+                "<p>Texto 2: " + texto2 + "</p>" +
+                "<p><strong>Concatenado: " + resultado + "</strong></p>";
+            
+            // 8. Mostrar en consola
+            console.log("Concatenación:");
+            console.log("Texto 1:", texto1);
+            console.log("Texto 2:", texto2);
+            console.log("Resultado:", resultado);
+        }
+    </script>
+</body>
+</html>

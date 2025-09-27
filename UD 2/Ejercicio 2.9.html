@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2.9</title>
+</head>
+<body>
+    <h1>Validador de Fechas</h1>
+    <button onclick="validarFecha()">Validar Fecha</button>
+    <div id="resultado"></div>
+
+    <script>
+        function validarFecha() {
+            // Pedir año, mes y día
+            let año = parseInt(prompt("Introduce el año:"));
+            if (isNaN(año)) {
+                alert("Año no válido");
+                return;
+            }
+            
+            let mes = parseInt(prompt("Introduce el mes (1-12):"));
+            if (isNaN(mes) || mes < 1 || mes > 12) {
+                alert("Mes no válido");
+                return;
+            }
+            
+            let dia = parseInt(prompt("Introduce el día:"));
+            if (isNaN(dia)) {
+                alert("Día no válido");
+                return;
+            }
+            
+            // Validar fecha
+            if (esFechaValida(dia, mes, año)) {
+                let diaF = dia.toString().padStart(2, '0');
+                let mesF = mes.toString().padStart(2, '0');
+                let fecha = `${diaF}/${mesF}/${año}`;
+                
+                alert(`✅ Fecha válida: ${fecha}`);
+                document.getElementById('resultado').innerHTML = `
+                    <h3>Fecha válida: ${fecha}</h3>
+                    ${esBisiesto(año) && mes === 2 ? '<p>💡 Este año es bisiesto</p>' : ''}
+                `;
+            } else {
+                alert("❌ Fecha inválida");
+                document.getElementById('resultado').innerHTML = "<h3>Fecha inválida</h3>";
+            }
+        }
+        
+        function esFechaValida(dia, mes, año) {
+            // Días por mes
+            const diasMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
+            // Ajustar febrero si es bisiesto
+            if (mes === 2 && esBisiesto(año)) {
+                diasMes[1] = 29;
+            }
+            
+            return dia >= 1 && dia <= diasMes[mes - 1];
+        }
+        
+        function esBisiesto(año) {
+            return (año % 4 === 0 && año % 100 !== 0) || (año % 400 === 0);
+        }
+    </script>
+</body>
+</html>
