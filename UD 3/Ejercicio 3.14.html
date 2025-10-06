@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3.14 - Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e8;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora Básica</h2>
+        
+        <!-- Formulario para introducir los números y operación -->
+        <input type="number" id="numero1" placeholder="Primer número" step="any">
+        <input type="number" id="numero2" placeholder="Segundo número" step="any">
+        
+        <select id="operacion">
+            <option value="+">Sumar (+)</option>
+            <option value="-">Restar (-)</option>
+            <option value="*">Multiplicar (×)</option>
+            <option value="/">Dividir (÷)</option>
+        </select>
+        
+        <button onclick="calcular()">Calcular</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function calcular() {
+            // Obtener los valores de los inputs
+            const num1 = parseFloat(document.getElementById('numero1').value);
+            const num2 = parseFloat(document.getElementById('numero2').value);
+            const operacion = document.getElementById('operacion').value;
+            
+            // Validar que ambos números sean válidos
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, introduce ambos números válidos");
+                return;
+            }
+            
+            let resultado;
+            let simbolo;
+            
+            // Realizar la operación seleccionada usando switch
+            switch (operacion) {
+                case '+':
+                    resultado = num1 + num2;
+                    simbolo = '+';
+                    break;
+                case '-':
+                    resultado = num1 - num2;
+                    simbolo = '-';
+                    break;
+                case '*':
+                    resultado = num1 * num2;
+                    simbolo = '×';
+                    break;
+                case '/':
+                    // Validar división por cero
+                    if (num2 === 0) {
+                        alert("Error: No se puede dividir por cero");
+                        return;
+                    }
+                    resultado = num1 / num2;
+                    simbolo = '÷';
+                    break;
+                default:
+                    alert("Operación no válida");
+                    return;
+            }
+            
+            // Mostrar el resultado formateado
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <div class="resultado">
+                    ${num1} ${simbolo} ${num2} = <strong>${resultado}</strong>
+                </div>
+            `;
+            
+            // Mostrar también en consola
+            console.log(`Cálculo: ${num1} ${simbolo} ${num2} = ${resultado}`);
+        }
+    </script>
+</body>
+</html>

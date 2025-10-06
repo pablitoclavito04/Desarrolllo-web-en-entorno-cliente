@@ -1,0 +1,189 @@
+!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3.19 - Buscar y Reemplazar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .parrafo {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+            line-height: 1.6;
+            min-height: 100px;
+        }
+        .controles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f5e8;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+        }
+        .resaltado {
+            background-color: yellow;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        .estadisticas {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #FF9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Buscar y Reemplazar en Texto</h2>
+        
+        <div class="parrafo" id="textoParrafo">
+            JavaScript es un lenguaje de programación ampliamente utilizado en el desarrollo web. 
+            Con JavaScript podemos crear páginas web interactivas y dinámicas. 
+            JavaScript se ejecuta en el navegador del cliente y es esencial para el desarrollo web moderno.
+        </div>
+        
+        <div class="controles">
+            <input type="text" id="buscar" placeholder="Texto a buscar">
+            <input type="text" id="reemplazar" placeholder="Texto de reemplazo">
+        </div>
+        
+        <button onclick="buscarYReemplazar()">Buscar y Reemplazar</button>
+        <button onclick="resetearTexto()">Resetear Texto Original</button>
+        
+        <div class="estadisticas" id="estadisticas"></div>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        // Texto original para poder resetear
+        const textoOriginal = document.getElementById('textoParrafo').innerHTML;
+        
+        function buscarYReemplazar() {
+            const textoBuscar = document.getElementById('buscar').value.trim();
+            const textoReemplazar = document.getElementById('reemplazar').value;
+            const parrafo = document.getElementById('textoParrafo');
+            const resultadoDiv = document.getElementById('resultado');
+            const estadisticasDiv = document.getElementById('estadisticas');
+            
+            // Validar que se haya introducido texto a buscar
+            if (textoBuscar === '') {
+                alert("Por favor, introduce el texto a buscar");
+                return;
+            }
+            
+            // Obtener el texto actual del párrafo
+            let textoActual = parrafo.textContent;
+            
+            // Contar ocurrencias antes del reemplazo
+            const regex = new RegExp(textoBuscar, 'gi');
+            const ocurrencias = textoActual.match(regex);
+            const totalOcurrencias = ocurrencias ? ocurrencias.length : 0;
+            
+            // Realizar el reemplazo (case insensitive)
+            const textoModificado = textoActual.replace(new RegExp(textoBuscar, 'gi'), textoReemplazar);
+            
+            // Actualizar el párrafo con el texto modificado
+            parrafo.textContent = textoModificado;
+            
+            // Mostrar estadísticas
+            estadisticasDiv.innerHTML = `
+                <strong>Estadísticas:</strong> 
+                Se encontraron <strong>${totalOcurrencias}</strong> ocurrencias de "${textoBuscar}"
+                ${totalOcurrencias > 0 ? 'y se reemplazaron por "' + textoReemplazar + '"' : ''}
+            `;
+            
+            // Mostrar resultado
+            if (totalOcurrencias > 0) {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado">
+                        ✅ Reemplazo completado. Se reemplazaron ${totalOcurrencias} ocurrencias.
+                    </div>
+                `;
+            } else {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado" style="background-color: #fff3e0; border-color: #FF9800;">
+                        ⚠️ No se encontraron ocurrencias de "${textoBuscar}"
+                    </div>
+                `;
+            }
+            
+            // Mostrar en consola
+            console.log(`Búsqueda: "${textoBuscar}" → Reemplazo: "${textoReemplazar}"`);
+            console.log(`Ocurrencias encontradas: ${totalOcurrencias}`);
+            console.log("Texto modificado:", textoModificado);
+        }
+        
+        function resetearTexto() {
+            // Restaurar el texto original
+            document.getElementById('textoParrafo').innerHTML = textoOriginal;
+            document.getElementById('buscar').value = '';
+            document.getElementById('reemplazar').value = '';
+            document.getElementById('estadisticas').innerHTML = '';
+            document.getElementById('resultado').innerHTML = '';
+            
+            console.log("Texto reseteado al original");
+        }
+        
+        // Función para resaltar coincidencias (opcional)
+        function resaltarCoincidencias() {
+            const textoBuscar = document.getElementById('buscar').value.trim();
+            const parrafo = document.getElementById('textoParrafo');
+            
+            if (textoBuscar === '') {
+                parrafo.innerHTML = textoOriginal;
+                return;
+            }
+            
+            const texto = parrafo.textContent;
+            const regex = new RegExp(`(${textoBuscar})`, 'gi');
+            const textoResaltado = texto.replace(regex, '<span class="resaltado">$1</span>');
+            
+            parrafo.innerHTML = textoResaltado;
+        }
+        
+        // Resaltar coincidencias en tiempo real mientras se escribe
+        document.getElementById('buscar').addEventListener('input', resaltarCoincidencias);
+    </script>
+</body>
+</html>

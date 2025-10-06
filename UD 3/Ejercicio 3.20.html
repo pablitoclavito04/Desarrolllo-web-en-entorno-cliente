@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3.20 - Contador de Ocurrencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: vertical;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .resultado {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #e8f5e8;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            text-align: center;
+        }
+        .contador {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 20px 0;
+        }
+        .detalles {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #FF9800;
+            text-align: left;
+        }
+        .coincidencias {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .resaltado {
+            background-color: yellow;
+            font-weight: bold;
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+        .sin-coincidencias {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Contador de Ocurrencias en Texto</h2>
+        <p>Introduce un texto y una cadena para buscar cuántas veces aparece</p>
+        
+        <textarea id="textoPrincipal" placeholder="Introduce el texto principal aquí...">JavaScript es un lenguaje de programación muy popular. JavaScript se utiliza tanto en el frontend como en el backend. Aprender JavaScript es esencial para el desarrollo web moderno. javascript es case sensitive, pero podemos hacer búsquedas insensibles.</textarea>
+        
+        <input type="text" id="cadenaBuscar" placeholder="Introduce la cadena a buscar..." value="JavaScript">
+        
+        <button onclick="contarOcurrencias()">Contar Ocurrencias</button>
+        <button onclick="limpiarCampos()">Limpiar Campos</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function contarOcurrencias() {
+            // Obtener el texto principal y la cadena a buscar
+            const textoPrincipal = document.getElementById('textoPrincipal').value;
+            const cadenaBuscar = document.getElementById('cadenaBuscar').value.trim();
+            const resultadoDiv = document.getElementById('resultado');
+            
+            // Validar que se haya introducido texto y cadena a buscar
+            if (textoPrincipal.trim() === '') {
+                alert("Por favor, introduce un texto principal");
+                return;
+            }
+            
+            if (cadenaBuscar === '') {
+                alert("Por favor, introduce una cadena a buscar");
+                return;
+            }
+            
+            // Método 1: Usando expresiones regulares para contar ocurrencias (case insensitive)
+            const regex = new RegExp(cadenaBuscar, 'gi'); // 'g' para global, 'i' para case insensitive
+            const ocurrencias = textoPrincipal.match(regex);
+            const totalOcurrencias = ocurrencias ? ocurrencias.length : 0;
+            
+            // Método 2: Alternativa usando split (menos eficiente para textos grandes)
+            // const totalOcurrencias = textoPrincipal.toLowerCase().split(cadenaBuscar.toLowerCase()).length - 1;
+            
+            // Crear versión del texto con las coincidencias resaltadas
+            const textoResaltado = textoPrincipal.replace(
+                new RegExp(`(${cadenaBuscar})`, 'gi'), 
+                '<span class="resaltado">$1</span>'
+            );
+            
+            // Mostrar resultados
+            if (totalOcurrencias > 0) {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado">
+                        <h3>✅ Resultados de la Búsqueda</h3>
+                        <div class="contador">${totalOcurrencias}</div>
+                        <p>La cadena "<strong>${cadenaBuscar}</strong>" aparece <strong>${totalOcurrencias}</strong> veces en el texto</p>
+                        
+                        <div class="detalles">
+                            <h4>📊 Detalles de la búsqueda:</h4>
+                            <p><strong>Cadena buscada:</strong> "${cadenaBuscar}"</p>
+                            <p><strong>Total de ocurrencias:</strong> ${totalOcurrencias}</p>
+                            <p><strong>Búsqueda:</strong> Case insensitive (no distingue mayúsculas/minúsculas)</p>
+                        </div>
+                        
+                        <div class="coincidencias">
+                            <h4>🔍 Texto con coincidencias resaltadas:</h4>
+                            <div style="background: white; padding: 15px; border-radius: 5px; border: 1px solid #ddd; text-align: left; line-height: 1.6;">
+                                ${textoResaltado}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado sin-coincidencias">
+                        <h3>❌ No se encontraron coincidencias</h3>
+                        <p>La cadena "<strong>${cadenaBuscar}</strong>" no aparece en el texto.</p>
+                        <div class="detalles">
+                            <p><strong>Sugerencias:</strong></p>
+                            <ul>
+                                <li>Verifica que la cadena esté escrita correctamente</li>
+                                <li>Intenta con diferentes mayúsculas/minúsculas</li>
+                                <li>La búsqueda es literal (busca exactamente lo que escribiste)</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Mostrar información detallada en consola
+            console.log("=== CONTADOR DE OCURRENCIAS ===");
+            console.log("Texto analizado:", textoPrincipal);
+            console.log("Cadena buscada:", cadenaBuscar);
+            console.log("Total de ocurrencias:", totalOcurrencias);
+            
+            if (ocurrencias) {
+                console.log("Coincidencias encontradas:", ocurrencias);
+            }
+        }
+        
+        function limpiarCampos() {
+            // Limpiar todos los campos y resultados
+            document.getElementById('textoPrincipal').value = '';
+            document.getElementById('cadenaBuscar').value = '';
+            document.getElementById('resultado').innerHTML = '';
+            
+            console.log("Campos limpiados");
+        }
+        
+        // Función para contar ocurrencias de forma case sensitive (alternativa)
+        function contarOcurrenciasCaseSensitive(texto, cadena) {
+            let contador = 0;
+            let posicion = texto.indexOf(cadena);
+            
+            // Buscar ocurrencias una por una
+            while (posicion !== -1) {
+                contador++;
+                posicion = texto.indexOf(cadena, posicion + 1);
+            }
+            
+            return contador;
+        }
+        
+        // Ejemplo de uso de diferentes métodos de búsqueda
+        function demostrarMetodosBusqueda() {
+            const textoEjemplo = "JavaScript javascript JAVASCRIPT js JS";
+            const cadenaEjemplo = "javascript";
+            
+            console.log("=== COMPARACIÓN DE MÉTODOS DE BÚSQUEDA ===");
+            console.log("Texto:", textoEjemplo);
+            console.log("Cadena a buscar:", cadenaEjemplo);
+            
+            // Método 1: Con expresión regular (case insensitive)
+            const regex = new RegExp(cadenaEjemplo, 'gi');
+            const metodo1 = textoEjemplo.match(regex)?.length || 0;
+            console.log("Método 1 (regex case insensitive):", metodo1);
+            
+            // Método 2: Con expresión regular (case sensitive)
+            const metodo2 = textoEjemplo.match(new RegExp(cadenaEjemplo, 'g'))?.length || 0;
+            console.log("Método 2 (regex case sensitive):", metodo2);
+            
+            // Método 3: Usando split
+            const metodo3 = textoEjemplo.toLowerCase().split(cadenaEjemplo.toLowerCase()).length - 1;
+            console.log("Método 3 (split case insensitive):", metodo3);
+            
+            // Método 4: Búsqueda manual case sensitive
+            const metodo4 = contarOcurrenciasCaseSensitive(textoEjemplo, cadenaEjemplo);
+            console.log("Método 4 (búsqueda manual case sensitive):", metodo4);
+        }
+        
+        // Ejecutar demostración al cargar la página
+        window.onload = demostrarMetodosBusqueda;
+        
+        // Permitir contar con la tecla Enter en el campo de búsqueda
+        document.getElementById('cadenaBuscar').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                contarOcurrencias();
+            }
+        });
+    </script>
+</body>
+</html>

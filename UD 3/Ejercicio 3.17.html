@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3.17 - Pedir código ostal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .madrid {
+            background-color: #e8f5e8;
+            border: 2px solid #4CAF50;
+            color: #2e7d32;
+        }
+        .barcelona {
+            background-color: #fff3e0;
+            border: 2px solid #FF9800;
+            color: #ef6c00;
+        }
+        .otra {
+            background-color: #e3f2fd;
+            border: 2px solid #2196F3;
+            color: #1976D2;
+        }
+        .error {
+            background-color: #ffebee;
+            border: 2px solid #f44336;
+            color: #c62828;
+        }
+        .info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Validador de Código Postal</h2>
+        
+        <div class="info">
+            <strong>Información:</strong><br>
+            • Madrid: códigos que empiezan por 28<br>
+            • Barcelona: códigos que empiezan por 08<br>
+            • Otros: resto de códigos postales
+        </div>
+        
+        <input type="text" id="codigoPostal" placeholder="Introduce el código postal (5 dígitos)" maxlength="5">
+        <button onclick="validarCodigoPostal()">Validar Código Postal</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function validarCodigoPostal() {
+            // Obtener el valor del input y eliminar espacios en blanco
+            const codigo = document.getElementById('codigoPostal').value.trim();
+            const resultadoDiv = document.getElementById('resultado');
+            
+            // Validar que el código tenga exactamente 5 caracteres
+            if (codigo.length !== 5) {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado error">
+                        ❌ El código postal debe tener exactamente 5 dígitos
+                    </div>
+                `;
+                console.log("Error: Código postal debe tener 5 dígitos");
+                return;
+            }
+            
+            // Validar que todos los caracteres sean números
+            if (!/^\d+$/.test(codigo)) {
+                resultadoDiv.innerHTML = `
+                    <div class="resultado error">
+                        ❌ El código postal debe contener solo números
+                    </div>
+                `;
+                console.log("Error: Código postal debe contener solo números");
+                return;
+            }
+            
+            // Determinar la localidad según los dos primeros dígitos
+            let localidad;
+            let clase;
+            
+            if (codigo.startsWith('28')) {
+                localidad = 'Madrid';
+                clase = 'madrid';
+            } else if (codigo.startsWith('08')) {
+                localidad = 'Barcelona';
+                clase = 'barcelona';
+            } else {
+                localidad = 'Otra localidad';
+                clase = 'otra';
+            }
+            
+            // Mostrar el resultado
+            resultadoDiv.innerHTML = `
+                <div class="resultado ${clase}">
+                    📍 Código Postal: <strong>${codigo}</strong><br>
+                    🏙️ Localidad: <strong>${localidad}</strong>
+                </div>
+            `;
+            
+            // Mostrar en consola
+            console.log(`Código Postal: ${codigo} → ${localidad}`);
+        }
+        
+        // Validación en tiempo real mientras se escribe
+        document.getElementById('codigoPostal').addEventListener('input', function(e) {
+            // Permitir solo números
+            this.value = this.value.replace(/[^\d]/g, '');
+            
+            // Limitar a 5 caracteres
+            if (this.value.length > 5) {
+                this.value = this.value.slice(0, 5);
+            }
+        });
+        
+        // Permitir validar con la tecla Enter
+        document.getElementById('codigoPostal').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validarCodigoPostal();
+            }
+        });
+    </script>
+</body>
+</html>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>

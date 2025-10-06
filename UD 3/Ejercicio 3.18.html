@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3.18 - Pedir una caderna y al pulsar un botón verla invertida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+            border: 1px solid #2196F3;
+        }
+        .original, .invertida {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 3px;
+            border-left: 4px solid #FF9800;
+        }
+        .invertida {
+            border-left-color: #4CAF50;
+            font-weight: bold;
+        }
+        h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Invertir Cadena de Texto</h2>
+        
+        <input type="text" id="textoOriginal" placeholder="Introduce el texto a invertir">
+        <button onclick="invertirTexto()">Invertir Texto</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function invertirTexto() {
+            // Obtener el texto del input
+            const texto = document.getElementById('textoOriginal').value.trim();
+            const resultadoDiv = document.getElementById('resultado');
+            
+            // Validar que se haya introducido texto
+            if (texto === '') {
+                alert("Por favor, introduce un texto");
+                return;
+            }
+            
+            // Método 1: Usando split, reverse y join (más eficiente)
+            const textoInvertido = texto.split('').reverse().join('');
+            
+            // Método alternativo: Usando un bucle for
+            // let textoInvertido = '';
+            // for (let i = texto.length - 1; i >= 0; i--) {
+            //     textoInvertido += texto[i];
+            // }
+            
+            // Mostrar el resultado
+            resultadoDiv.innerHTML = `
+                <div class="original">
+                    <h3>Texto Original:</h3>
+                    <p>${texto}</p>
+                </div>
+                <div class="invertida">
+                    <h3>Texto Invertido:</h3>
+                    <p>${textoInvertido}</p>
+                </div>
+            `;
+            
+            // Mostrar en consola
+            console.log(`Texto original: "${texto}"`);
+            console.log(`Texto invertido: "${textoInvertido}"`);
+        }
+        
+        // Permitir invertir con la tecla Enter
+        document.getElementById('textoOriginal').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                invertirTexto();
+            }
+        });
+        
+        // Ejemplo de diferentes métodos para invertir cadenas
+        function demostrarMetodosInversion() {
+            const texto = "Hola Mundo";
+            
+            console.log("=== Métodos para invertir cadenas ===");
+            console.log("Texto original:", texto);
+            
+            // Método 1: split + reverse + join (recomendado)
+            const metodo1 = texto.split('').reverse().join('');
+            console.log("Método 1 (split+reverse+join):", metodo1);
+            
+            // Método 2: Bucle for tradicional
+            let metodo2 = '';
+            for (let i = texto.length - 1; i >= 0; i--) {
+                metodo2 += texto[i];
+            }
+            console.log("Método 2 (bucle for):", metodo2);
+            
+            // Método 3: Bucle for...of (menos eficiente)
+            let metodo3 = '';
+            for (let char of texto) {
+                metodo3 = char + metodo3;
+            }
+            console.log("Método 3 (for...of):", metodo3);
+            
+            // Método 4: Usando reduce
+            const metodo4 = texto.split('').reduce((acc, char) => char + acc, '');
+            console.log("Método 4 (reduce):", metodo4);
+        }
+        
+        // Ejecutar demostración al cargar la página
+        window.onload = demostrarMetodosInversion;
+    </script>
+</body>
+</html>
