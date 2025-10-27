@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador Pokémon</title>
+  <link rel="stylesheet" type="text/css" href="/Buscador Pokemon/PaginaPrincipal.css">
+</head>
+<body>
+  <header class="header_image">
+    <img src="https://static.vecteezy.com/system/resources/previews/027/127/591/original/pokemon-logo-pokemon-icon-transparent-free-png.png" alt="Logo Pokémon">
+  </header>
+
+  <p>Buscador de Pokémons por nombres.</p>
+
+  <div class="search_container">
+    <input id="pokemonInput" type="text" placeholder="Buscar...">
+    <button id="searchBtn">Buscar</button>
+  </div>
+
+  <div class="pokemon_result" id="pokemonResult"></div>
+
+  <script>
+  const searchBtn = document.getElementById('searchBtn');
+  const pokemonInput = document.getElementById('pokemonInput');
+  const pokemonResult = document.getElementById('pokemonResult');
+
+  let allPokemon = []; // Guardará los 1025 nombres
+
+  // 1️. Cargamos los 1025 Pokémon al inicio
+  async function cargarPokemons() {
+    const respuesta = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
+    const data = await respuesta.json();
+    allPokemon = data.results; // [{ name: 'bulbasaur', url: '...' }, ...]
+  }
+
+  // 2️. Mostrar resultados filtrados mientras el usuario escribe
+  function filtrarPokemons() {
+    const texto = pokemonInput.value.toLowerCase().trim();
+    pokemonResult.innerHTML = ''; // Limpiar resultados
+
+    if (texto.length === 0) return; // No muestra nada si está vacío
+
+    // Filtrar nombres que empiecen por las letras escritas
+    const filtrados = allPokemon.filter(p => p.name.startsWith(texto));
+
+    if (filtrados.length === 0) {
+      pokemonResult.innerHTML = `<p class="error">❌ No se encontraron Pokémon que empiecen por "${texto}"</p>`;
+      return;
+    }
+
+    // Mostrar los resultados
+    filtrados.forEach(async (poke) => {
+      const res = await fetch(poke.url);
+      const data = await res.json();
+
+      const imagen = data.sprites.other['official-artwork'].front_default;
+      const tipo = data.types.map(t => t.type.name).join(', ');
+
+      const card = `
+        <div class="pokemon_card">
+          <img src="${imagen}" alt="${data.name}">
+          <h2>${data.name}</h2>
+          <p><strong>Tipo:</strong> ${tipo}</p>
+        </div>
+      `;
+      pokemonResult.innerHTML += card;
+    });
+  }
+
+  // 3️. Función actual de buscar por nombre exacto (por si mantienes el botón)
+  async function buscarPokemon() {
+    const nombre = pokemonInput.value.toLowerCase().trim();
+    if (!nombre) {
+      pokemonResult.innerHTML = '<p class="error">Por favor escribe un nombre.</p>';
+      return;
+    }
+
+    try {
+      const respuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
+      if (!respuesta.ok) throw new Error('Pokémon no encontrado');
+      const data = await respuesta.json();
+
+      const imagen = data.sprites.other['official-artwork'].front_default;
+      const tipo = data.types.map(t => t.type.name).join(', ');
+      const id = data.id;
+
+      pokemonResult.innerHTML = `
+        <div class="pokemon_card">
+          <img src="${imagen}" alt="${data.name}">
+          <h2>${data.name}</h2>
+          <p><strong>ID:</strong> ${id}</p>
+          <p><strong>Tipo:</strong> ${tipo}</p>
+        </div>
+      `;
+    } catch (error) {
+      pokemonResult.innerHTML = `<p class="error">❌ ${error.message}</p>`;
+    }
+  }
+
+  // 4. Eventos
+  searchBtn.addEventListener('click', buscarPokemon);
+  pokemonInput.addEventListener('input', filtrarPokemons);
+  pokemonInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') buscarPokemon();
+  });
+
+  // 5️. Cargar Pokémon al iniciar la página
+  cargarPokemons();
+</script>
+</body>
+</html>
