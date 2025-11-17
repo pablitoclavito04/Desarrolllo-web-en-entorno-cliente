@@ -90,10 +90,11 @@ const dbRequest = indexedDB.open("CRM", 1);
         return esValido;
     }
 
-        /**
-         * Valida todo el formulario
-         * @returns {boolean} - true si todo es válido
-         */
+/**
+* Valida todo el formulario
+* @returns {boolean} - true si todo es válido
+*/
+
         function validarFormulario() {
             const name = document.getElementById('name');
             const email = document.getElementById('email');
