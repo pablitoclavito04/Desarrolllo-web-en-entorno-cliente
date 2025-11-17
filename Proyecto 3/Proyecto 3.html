@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Profesional - IndexedDB</title>
+    <link rel="stylesheet"  href="/Proyecto 3/Proyecto 3.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CRM Profesional</h1>
+        <p class="subtitle">Sistema de gestión de clientes con IndexedDB</p>
+
+        <!-- SECCIÓN DE FORMULARIO -->
+        <div class="form-section">
+            <h2 style="margin-bottom: 20px; color: var(--text-dark);">
+                <span id="formTitle">➕ Agregar Nuevo Cliente</span>
+            </h2>
+            
+            <div class="form-group">
+                <label for="name">Nombre completo *</label>
+                <input type="text" id="name" placeholder="Ej: Juan Pérez García" required>
+                <div class="error-message" id="nameError">El nombre debe tener al menos 3 caracteres</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" placeholder="Ej: juan@ejemplo.com" required>
+                <div class="error-message" id="emailError">Ingresa un email válido</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Teléfono *</label>
+                <input type="tel" id="phone" placeholder="Ej: 612345678 o +34612345678" required>
+                <div class="error-message" id="phoneError">Formato: 9 dígitos o +34XXXXXXXXX</div>
+            </div>
+
+            <button class="btn btn-primary" id="submitBtn">
+                <span id="btnText">✓ Agregar Cliente</span>
+            </button>
+            <button class="btn" id="cancelBtn" style="display: none; background: #95a5a6; color: white; margin-left: 10px;">
+                Cancelar
+            </button>
+        </div>
+
+        <!-- SECCIÓN DE BÚSQUEDA -->
+        <div class="search-section">
+            <label for="searchInput">🔍 Buscar clientes</label>
+            <input type="text" id="searchInput" placeholder="Busca por nombre, email o teléfono...">
+            <div class="search-info" id="searchInfo"></div>
+        </div>
+
+        <!-- TABLA DE CLIENTES -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h2>⚠️ Confirmar eliminación</h2>
+            <p>¿Estás seguro de que deseas eliminar este cliente?</p>
+            <div class="modal-actions">
+                <button class="btn btn-delete" id="confirmDelete">Sí, eliminar</button>
+                <button class="btn" style="background: #95a5a6; color: white;" id="cancelDelete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <script src="/Proyecto 3/Proyecto 3.js"></script>
+</body>
