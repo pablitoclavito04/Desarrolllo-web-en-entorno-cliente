@@ -1,121 +1,94 @@
-/**
-         * ============================================
-         * CRM PROFESIONAL CON INDEXEDDB
-         * ============================================
-         * 
-         * MEJORAS IMPLEMENTADAS:
-         * 
-         * 1. VALIDACIÓN COMPLETA:
-         *    - Validación en tiempo real de campos
-         *    - Expresiones regulares para email y teléfono
-         *    - Feedback visual inmediato
-         * 
-         * 2. CRUD COMPLETO:
-         *    - Create: Agregar clientes
-         *    - Read: Listar y buscar
-         *    - Update: Editar clientes existentes
-         *    - Delete: Eliminar con confirmación
-         * 
-         * 3. BÚSQUEDA EN TIEMPO REAL:
-         *    - Filtrado dinámico sin clic
-         *    - Resaltado de coincidencias
-         *    - Contador de resultados
-         * 
-         * 4. UX MEJORADA:
-         *    - Notificaciones toast
-         *    - Animaciones suaves
-         *    - Modal de confirmación
-         *    - Limpieza automática de formularios
-         */
+// ============================================
+//             VARIABLES GLOBALES
+// ============================================
 
-        // ============================================
-        // VARIABLES GLOBALES
-        // ============================================
-        let db; // Referencia a la base de datos IndexedDB
-        let clienteEditando = null; // ID del cliente en edición (null si es nuevo)
-        let clienteAEliminar = null; // ID del cliente a eliminar
-        let todosLosClientes = []; // Cache de todos los clientes para búsqueda
-
+let db; // Referencia a la base de datos IndexedDB
+let clienteEditando = null; // ID del cliente en edición (null si es nuevo)
+let clienteAEliminar = null; // ID del cliente a eliminar
+let todosLosClientes = []; // Cache de todos los clientes para búsqueda
       
-        /**
-         * Abre la base de datos y crea el object store si no existe
-         */
-        const dbRequest = indexedDB.open("CRM", 1);
+/**
+* Abre la base de datos y crea el object store si no existe
+*/
+const dbRequest = indexedDB.open("CRM", 1);
 
-        dbRequest.onupgradeneeded = (evento) => {
-            db = evento.target.result;
+    dbRequest.onupgradeneeded = (evento) => {
+        db = evento.target.result;
             
-            // Crear object store si no existe
-            if (!db.objectStoreNames.contains('clients')) {
-                db.createObjectStore('clients', {
-                    keyPath: 'id',
-                    autoIncrement: true
-                });
-                console.log('✓ Object store "clients" creado');
-            }
-        };
-
-        dbRequest.onsuccess = (evento) => {
-            db = evento.target.result;
-            console.log('✓ Base de datos abierta correctamente');
-            cargarClientes(); // Cargar clientes al iniciar
-        };
-
-        dbRequest.onerror = (evento) => {
-            console.error('✗ Error al abrir la base de datos:', evento.target.error);
-            mostrarNotificacion('Error al abrir la base de datos', 'error');
-        };
-
-        // ============================================
-        // VALIDACIONES
-        // ============================================
-
-        /**
-         * Expresiones regulares para validación
-         */
-        const REGEX = {
-            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            // Acepta: 612345678 o +34612345678
-            phone: /^(\+34)?[6-9]\d{8}$/
-        };
-
-        /**
-         * Valida un campo individual
-         * @param {HTMLElement} input - Campo a validar
-         * @returns {boolean} - true si es válido
-         */
-        function validarCampo(input) {
-            const valor = input.value.trim();
-            const id = input.id;
-            const errorElement = document.getElementById(`${id}Error`);
-            let esValido = true;
-
-            // Validación según el tipo de campo
-            switch(id) {
-                case 'name':
-                    esValido = valor.length >= 3;
-                    break;
-                case 'email':
-                    esValido = REGEX.email.test(valor);
-                    break;
-                case 'phone':
-                    esValido = REGEX.phone.test(valor);
-                    break;
-            }
-
-            // Actualizar UI según validación
-            if (esValido) {
-                input.classList.remove('invalid');
-                input.classList.add('valid');
-                errorElement.classList.remove('show');
-            } else {
-                input.classList.remove('valid');
-                input.classList.add('invalid');
-                errorElement.classList.add('show');
-            }
-
-            return esValido;
+    // Crear object store si no existe
+    if (!db.objectStoreNames.contains('clients')) {
+        db.createObjectStore('clients', {
+                keyPath: 'id',
+                autoIncrement: true
+            });
+            console.log('✓ Object store "clients" creado');
         }
+    };
+
+    dbRequest.onsuccess = (evento) => {
+        db = evento.target.result;
+        console.log('✓ Base de datos abierta correctamente');
+        cargarClientes(); // Cargar clientes al iniciar
+    };
+
+    dbRequest.onerror = (evento) => {
+        console.error('✗ Error al abrir la base de datos:', evento.target.error);
+        mostrarNotificacion('Error al abrir la base de datos', 'error');
+    };
+
+
+// ============================================
+//                VALIDACIONES
+// ============================================
+
+/**
+* Expresiones regulares para validación
+*/
+    const REGEX = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+
+        // Acepta: 612345678 o +34612345678
+        phone: /^(\+34)?[6-9]\d{8}$/
+    };
+
+    /**
+    * Valida un campo individual
+    * @param {HTMLElement} input - Campo a validar
+    * @returns {boolean} - true si es válido
+    */
+
+    function validarCampo(input) {
+        const valor = input.value.trim();
+        const id = input.id;
+        const errorElement = document.getElementById(`${id}Error`);
+        let esValido = true;
+
+        // Validación según el tipo de campo
+        switch(id) {
+            case 'name':
+                esValido = valor.length >= 3;
+                break;
+            case 'email':
+                esValido = REGEX.email.test(valor);
+                break;
+        case 'phone':
+            esValido = REGEX.phone.test(valor);
+            break;
+        }
+
+        // Actualizar UI según validación
+        if (esValido) {
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+            errorElement.classList.remove('show');
+        } else {
+            input.classList.remove('valid');
+            input.classList.add('invalid');
+            errorElement.classList.add('show');
+        }
+
+        return esValido;
+    }
 
         /**
          * Valida todo el formulario
