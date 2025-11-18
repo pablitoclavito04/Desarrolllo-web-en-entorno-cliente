@@ -1,7 +1,9 @@
 ﻿# Proyecto-1-Angular - Practica DOM Angular.
 
 ## 1. Descripción:
-Esta práctica consiste en el desarrollo de una aplicación Angular que demuestra la manipulación del DOM mediante la detección automática de navegadores y la modificación dinámica de elementos. El proyecto fue desarrollado utilizando Angular 20 con componentes standalone, TypeScript, HTML5 y CSS3.
+Esta práctica consiste en el desarrollo de una aplicación Angular que demuestra la manipulación del DOM mediante la detección
+automática de navegadores y la modificación dinámica de elementos. El proyecto fue desarrollado utilizando Angular 20 con
+componentes standalone, TypeScript, HTML5 y CSS3.
 
 
 ## 2. Objetivos:
@@ -42,3 +44,4 @@ Para ejecutar el proyecto localmente, primero se debe instalar Angular CLI globa
 
 ## 8. Conclusión:
 La práctica demuestra conceptos fundamentales del desarrollo web moderno con Angular, incluyendo el acceso y manipulación del DOM, el manejo de eventos del usuario, la detección de características del navegador, la programación reactiva con signals y la separación clara entre la lógica de negocio, la presentación y los estilos. Estos conceptos son esenciales para el desarrollo de aplicaciones web modernas y escalables.
+
