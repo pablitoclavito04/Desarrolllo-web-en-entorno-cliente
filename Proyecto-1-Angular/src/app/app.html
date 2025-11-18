@@ -1,0 +1,23 @@
+<div style="padding: 2em;">
+  <h1>{{ title() }}</h1>
+  
+  <div #content class="content-box">
+    Contenido inicial del div.
+  </div>
+  
+  <button (click)="addItem()">Añadir ítem</button>
+  
+  <ul>
+    @for (item of items(); track $index) {
+      <li>{{ item }}</li>
+    }
+  </ul>
+  
+  <input 
+    type="text" 
+    (input)="onInputChange($event)" 
+    placeholder="Escribe algo aquí..."
+  />
+  
+  <p>{{ inputText() }}</p>
+</div>
