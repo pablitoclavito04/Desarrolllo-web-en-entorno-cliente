@@ -1,0 +1,146 @@
+<div class="container">
+  <h2>Generador de Facturas</h2>
+  
+  <form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Datos de la Factura -->
+    <div class="factura-header">
+      <div class="form-group">
+        <label for="numeroFactura">Número de Factura:</label>
+        <input 
+          type="text" 
+          id="numeroFactura" 
+          formControlName="numeroFactura"
+          placeholder="FAC-000001"
+          class="form-control"
+          [class.invalid]="numeroFactura?.invalid && numeroFactura?.touched">
+        
+        <div *ngIf="numeroFactura?.invalid && numeroFactura?.touched" class="error-message">
+          <small *ngIf="numeroFactura?.errors?.['required']">Requerido</small>
+          <small *ngIf="numeroFactura?.errors?.['formatoFactura']">Formato: FAC-XXXXXX (6 dígitos)</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fecha">Fecha:</label>
+        <input 
+          type="date" 
+          id="fecha" 
+          formControlName="fecha"
+          class="form-control"
+          [class.invalid]="fecha?.invalid && fecha?.touched">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="cliente">Cliente:</label>
+        <input 
+          type="text" 
+          id="cliente" 
+          formControlName="cliente"
+          class="form-control"
+          [class.invalid]="cliente?.invalid && cliente?.touched">
+        
+        <div *ngIf="cliente?.invalid && cliente?.touched" class="error-message">
+          <small *ngIf="cliente?.errors?.['required']">Requerido</small>
+          <small *ngIf="cliente?.errors?.['minlength']">Mínimo 3 caracteres</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalles de Factura -->
+    <div class="detalles-section">
+      <h3>Detalles de Factura</h3>
+
+      <div formArrayName="detalles" class="detalles-lista">
+        <div *ngFor="let detalle of detalles.controls; let i = index" 
+             [formGroupName]="i" 
+             class="detalle-item">
+          
+          <div class="detalle-header">
+            <h4>Detalle {{ i + 1 }}</h4>
+            <button type="button" class="btn-delete" (click)="eliminarDetalle(i)">
+              ✕ Eliminar
+            </button>
+          </div>
+
+          <div class="detalle-grid">
+            <div class="form-group">
+              <label>Producto:</label>
+              <input 
+                type="text" 
+                formControlName="producto"
+                class="form-control"
+                placeholder="Nombre del producto">
+            </div>
+
+            <div class="form-group">
+              <label>Cantidad:</label>
+              <input 
+                type="number" 
+                formControlName="cantidad"
+                class="form-control"
+                min="1">
+            </div>
+
+            <div class="form-group">
+              <label>Precio Unitario (€):</label>
+              <input 
+                type="number" 
+                formControlName="precioUnitario"
+                class="form-control"
+                step="0.01"
+                min="0.01">
+            </div>
+
+            <div class="form-group">
+              <label>Descuento (%):</label>
+              <input 
+                type="number" 
+                formControlName="descuento"
+                class="form-control"
+                min="0"
+                max="100">
+            </div>
+          </div>
+
+          <div class="subtotal-detalle">
+            <strong>Subtotal:</strong> 
+            {{ calcularSubtotalDetalle(i) | currency:'EUR':'symbol':'1.2-2' }}
+          </div>
+        </div>
+
+        <div *ngIf="detalles.length === 0" class="sin-detalles">
+          <p>No hay detalles agregados. Haz clic en "Agregar Detalle" para comenzar.</p>
+        </div>
+      </div>
+
+      <button type="button" class="btn-add" (click)="agregarDetalle()">
+        + Agregar Detalle
+      </button>
+    </div>
+
+    <!-- Resumen de Totales -->
+    <div class="totales" *ngIf="detalles.length > 0">
+      <div class="total-row">
+        <span>Subtotal:</span>
+        <span>{{ calcularSubtotal() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      </div>
+      <div class="total-row">
+        <span>IVA (21%):</span>
+        <span>{{ calcularIVA() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      </div>
+      <div class="total-row total-final">
+        <span>Total:</span>
+        <span>{{ calcularTotal() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="facturaForm.invalid || detalles.length === 0">
+      Guardar Factura
+    </button>
+  </form>
+</div>

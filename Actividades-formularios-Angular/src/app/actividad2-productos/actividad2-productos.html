@@ -1,0 +1,141 @@
+<div class="container">
+  <h2>Gestor de Productos</h2>
+  
+  <form [formGroup]="productosForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Nombre del Producto -->
+    <div class="form-group">
+      <label for="nombre">Nombre del Producto:</label>
+      <input 
+        type="text" 
+        id="nombre" 
+        formControlName="nombre"
+        class="form-control"
+        [class.invalid]="nombre?.invalid && nombre?.touched">
+      
+      <div *ngIf="nombre?.invalid && nombre?.touched" class="error-message">
+        <small *ngIf="nombre?.errors?.['required']">Requerido</small>
+        <small *ngIf="nombre?.errors?.['minlength']">Mínimo 3 caracteres</small>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea 
+        id="descripcion" 
+        formControlName="descripcion"
+        rows="3"
+        class="form-control"
+        [class.invalid]="descripcion?.invalid && descripcion?.touched"></textarea>
+      
+      <div *ngIf="descripcion?.invalid && descripcion?.touched" class="error-message">
+        <small *ngIf="descripcion?.errors?.['required']">Requerido</small>
+        <small *ngIf="descripcion?.errors?.['maxlength']">Máximo 200 caracteres</small>
+      </div>
+    </div>
+
+    <!-- Precio -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="precio">Precio (€):</label>
+        <input 
+          type="number" 
+          id="precio" 
+          formControlName="precio"
+          step="0.01"
+          class="form-control"
+          [class.invalid]="precio?.invalid && precio?.touched">
+        
+        <div *ngIf="precio?.invalid && precio?.touched" class="error-message">
+          <small *ngIf="precio?.errors?.['required']">Requerido</small>
+          <small *ngIf="precio?.errors?.['min']">Debe ser mayor a 0</small>
+        </div>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="form-group">
+        <label for="cantidad">Cantidad:</label>
+        <input 
+          type="number" 
+          id="cantidad" 
+          formControlName="cantidad"
+          class="form-control"
+          [class.invalid]="cantidad?.invalid && cantidad?.touched">
+        
+        <div *ngIf="cantidad?.invalid && cantidad?.touched" class="error-message">
+          <small *ngIf="cantidad?.errors?.['required']">Requerido</small>
+          <small *ngIf="cantidad?.errors?.['min']">Mínimo 1</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label for="categoria">Categoría:</label>
+      <select 
+        id="categoria" 
+        formControlName="categoria"
+        class="form-control"
+        [class.invalid]="categoria?.invalid && categoria?.touched">
+        <option value="">Seleccionar categoría...</option>
+        <option value="Electrónica">Electrónica</option>
+        <option value="Ropa">Ropa</option>
+        <option value="Alimentos">Alimentos</option>
+        <option value="Hogar">Hogar</option>
+        <option value="Deportes">Deportes</option>
+      </select>
+      
+      <div *ngIf="categoria?.invalid && categoria?.touched" class="error-message">
+        <small *ngIf="categoria?.errors?.['required']">Requerido</small>
+      </div>
+    </div>
+
+    <!-- Botón Submit -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="productosForm.invalid">
+      Agregar Producto
+    </button>
+  </form>
+
+  <!-- Lista de Productos -->
+  <div *ngIf="productos.length > 0" class="productos-tabla">
+    <h3>Productos Ingresados</h3>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Categoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td><strong>{{ producto.nombre }}</strong></td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.precio | currency:'EUR':'symbol':'1.2-2' }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td><span class="badge">{{ producto.categoria }}</span></td>
+          <td>
+            <button class="btn-delete" (click)="eliminarProducto(producto.id)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total">
+      <strong>Total del Inventario:</strong> 
+      {{ calcularTotal() | currency:'EUR':'symbol':'1.2-2' }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="container">
+  <h2>Registro Avanzado con Validación Asincrónica</h2>
+  
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          id="username" 
+          formControlName="username"
+          class="form-control"
+          [class.invalid]="username?.invalid && username?.touched"
+          [class.validating]="mostrarCargando('username')">
+        
+        <span *ngIf="mostrarCargando('username')" class="spinner">
+          ⏳ Verificando...
+        </span>
+      </div>
+      
+      <div *ngIf="username?.invalid && username?.touched" class="error-message">
+        <small *ngIf="username?.errors?.['required']">Requerido</small>
+        <small *ngIf="username?.errors?.['minlength']">Mínimo 3 caracteres</small>
+        <small *ngIf="username?.errors?.['usernameReservado']">Username no disponible (reservado)</small>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <div class="input-wrapper">
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          class="form-control"
+          [class.invalid]="email?.invalid && email?.touched"
+          [class.validating]="mostrarCargando('email')">
+        
+        <span *ngIf="mostrarCargando('email')" class="spinner">
+          ⏳ Verificando disponibilidad...
+        </span>
+      </div>
+      
+      <div *ngIf="email?.invalid && email?.touched" class="error-message">
+        <small *ngIf="email?.errors?.['required']">Requerido</small>
+        <small *ngIf="email?.errors?.['email']">Email inválido</small>
+        <small *ngIf="email?.errors?.['emailExiste']">Este email ya está registrado</small>
+      </div>
+      
+      <div *ngIf="mostrarCargando('email')" class="info-message">
+        <small>Validando disponibilidad del email...</small>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input 
+        type="password" 
+        id="password" 
+        formControlName="password"
+        class="form-control"
+        [class.invalid]="password?.invalid && password?.touched">
+      
+      <div *ngIf="password?.invalid && password?.touched" class="error-message">
+        <small *ngIf="password?.errors?.['required']">Requerida</small>
+        <small *ngIf="password?.errors?.['minlength']">Mínimo 8 caracteres</small>
+      </div>
+    </div>
+
+    <!-- Términos y Condiciones -->
+    <div class="form-group-checkbox">
+      <label>
+        <input 
+          type="checkbox" 
+          formControlName="terminos"
+          class="checkbox">
+        Acepto los términos y condiciones
+      </label>
+      
+      <div *ngIf="terminos?.invalid && terminos?.touched" class="error-message">
+        <small>Debes aceptar los términos</small>
+      </div>
+    </div>
+
+    <!-- Botón Submit -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="registroForm.invalid || registroForm.pending || enviando">
+      {{ enviando ? 'Registrando...' : 'Crear Cuenta' }}
+    </button>
+
+    <!-- Indicador de validación global -->
+    <div *ngIf="registroForm.pending" class="validating-message">
+      <span class="spinner-global">⏳</span> Validando información...
+    </div>
+  </form>
+
+  <!-- Información de prueba -->
+  <div class="info-panel">
+    <h3>💡 Información para pruebas:</h3>
+    <ul>
+      <li><strong>Emails ya registrados:</strong> admin@example.com, usuario@example.com, test@example.com</li>
+      <li><strong>Usernames reservados:</strong> Los que empiezan con "admin" (ej: admin123)</li>
+      <li><strong>Validación asincrónica:</strong> Simula 1 segundo de espera para verificar disponibilidad</li>
+    </ul>
+  </div>
+</div>

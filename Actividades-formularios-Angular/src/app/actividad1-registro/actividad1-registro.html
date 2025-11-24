@@ -1,0 +1,103 @@
+<div class="container">
+  <h2>Formulario de Registro</h2>
+  
+  <form #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
+    
+    <!-- Campo Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre Completo:</label>
+      <input 
+        type="text" 
+        id="nombre" 
+        name="nombre"
+        [(ngModel)]="usuario.nombre"
+        #nombre="ngModel"
+        required
+        minlength="3"
+        class="form-control"
+        [class.invalid]="nombre.invalid && nombre.touched">
+      
+      <div *ngIf="nombre.invalid && nombre.touched" class="error-message">
+        <small *ngIf="nombre.errors?.['required']">El nombre es requerido</small>
+        <small *ngIf="nombre.errors?.['minlength']">Mínimo 3 caracteres</small>
+      </div>
+    </div>
+
+    <!-- Campo Email -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email"
+        [(ngModel)]="usuario.email"
+        #email="ngModel"
+        required
+        email
+        class="form-control"
+        [class.invalid]="email.invalid && email.touched">
+      
+      <div *ngIf="email.invalid && email.touched" class="error-message">
+        <small *ngIf="email.errors?.['required']">El email es requerido</small>
+        <small *ngIf="email.errors?.['email']">Formato de email inválido</small>
+      </div>
+    </div>
+
+    <!-- Campo Contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input 
+        type="password" 
+        id="password" 
+        name="password"
+        [(ngModel)]="usuario.password"
+        #password="ngModel"
+        required
+        minlength="6"
+        class="form-control"
+        [class.invalid]="password.invalid && password.touched">
+      
+      <div *ngIf="password.invalid && password.touched" class="error-message">
+        <small *ngIf="password.errors?.['required']">La contraseña es requerida</small>
+        <small *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres</small>
+      </div>
+    </div>
+
+    <!-- Campo Confirmar Contraseña -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Contraseña:</label>
+      <input 
+        type="password" 
+        id="confirmPassword" 
+        name="confirmPassword"
+        [(ngModel)]="usuario.confirmPassword"
+        #confirmPassword="ngModel"
+        required
+        class="form-control"
+        [class.invalid]="confirmPassword.invalid && confirmPassword.touched">
+    </div>
+
+    <!-- Botón Submit -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="registroForm.invalid">
+      Registrarse
+    </button>
+  </form>
+
+  <!-- Mensaje de Éxito -->
+  <div *ngIf="mensajeExito" class="success-message">
+    {{ mensajeExito }}
+  </div>
+
+  <!-- Lista de Usuarios Registrados -->
+  <div *ngIf="usuariosRegistrados.length > 0" class="usuarios-lista">
+    <h3>Usuarios Registrados</h3>
+    <ul>
+      <li *ngFor="let user of usuariosRegistrados">
+        <strong>{{ user.nombre }}</strong> - {{ user.email }}
+      </li>
+    </ul>
+  </div>
+</div>

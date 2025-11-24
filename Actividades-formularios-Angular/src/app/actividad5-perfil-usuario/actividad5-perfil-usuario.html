@@ -1,0 +1,162 @@
+<div class="container">
+  <h2>Perfil de Usuario Completo</h2>
+  
+  <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Información Personal -->
+    <div class="seccion">
+      <h3>📋 Información Personal</h3>
+      
+      <div formGroupName="informacionPersonal" class="info-grid">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            formControlName="nombre"
+            class="form-control"
+            [class.invalid]="informacionPersonal.get('nombre')?.invalid && informacionPersonal.get('nombre')?.touched">
+          
+          <div *ngIf="informacionPersonal.get('nombre')?.invalid && informacionPersonal.get('nombre')?.touched" class="error-message">
+            <small>Nombre requerido (mínimo 2 caracteres)</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input 
+            type="text" 
+            id="apellido" 
+            formControlName="apellido"
+            class="form-control"
+            [class.invalid]="informacionPersonal.get('apellido')?.invalid && informacionPersonal.get('apellido')?.touched">
+          
+          <div *ngIf="informacionPersonal.get('apellido')?.invalid && informacionPersonal.get('apellido')?.touched" class="error-message">
+            <small>Apellido requerido (mínimo 2 caracteres)</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+          <input 
+            type="date" 
+            id="fechaNacimiento" 
+            formControlName="fechaNacimiento"
+            class="form-control"
+            [class.invalid]="informacionPersonal.get('fechaNacimiento')?.invalid && informacionPersonal.get('fechaNacimiento')?.touched">
+          
+          <div *ngIf="informacionPersonal.get('fechaNacimiento')?.value" class="edad-info">
+            <span>🎂 Edad: {{ calcularEdad() }} años</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input 
+            type="tel" 
+            id="telefono" 
+            formControlName="telefono"
+            placeholder="600123456"
+            class="form-control"
+            [class.invalid]="informacionPersonal.get('telefono')?.invalid && informacionPersonal.get('telefono')?.touched">
+          
+          <div *ngIf="informacionPersonal.get('telefono')?.invalid && informacionPersonal.get('telefono')?.touched" class="error-message">
+            <small>Teléfono inválido (mínimo 9 dígitos)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Direcciones -->
+    <div class="seccion">
+      <h3>🏠 Direcciones ({{ direcciones.length }})</h3>
+      
+      <div formArrayName="direcciones" class="direcciones-lista">
+        <div *ngFor="let direccion of direcciones.controls; let i = index" 
+             [formGroupName]="i" 
+             class="direccion-item">
+          
+          <div class="direccion-header">
+            <h4>Dirección {{ i + 1 }}</h4>
+            <button type="button" class="btn-delete" (click)="eliminarDireccion(i)">
+              ✕ Eliminar Dirección
+            </button>
+          </div>
+
+          <div class="direccion-grid">
+            <div class="form-group">
+              <label>Tipo:</label>
+              <select formControlName="tipo" class="form-control">
+                <option *ngFor="let tipo of tiposDireccion" [value]="tipo">
+                  {{ tipo }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Calle:</label>
+              <input 
+                type="text" 
+                formControlName="calle"
+                placeholder="Calle Mayor, 123"
+                class="form-control">
+              
+              <div *ngIf="direccion.get('calle')?.invalid && direccion.get('calle')?.touched" class="error-message">
+                <small>Mínimo 5 caracteres</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Ciudad:</label>
+              <input 
+                type="text" 
+                formControlName="ciudad"
+                placeholder="Madrid"
+                class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Código Postal:</label>
+              <input 
+                type="text" 
+                formControlName="codigoPostal"
+                placeholder="28001"
+                maxlength="5"
+                class="form-control">
+              
+              <div *ngIf="direccion.get('codigoPostal')?.invalid && direccion.get('codigoPostal')?.touched" class="error-message">
+                <small>Formato: 5 dígitos</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>País:</label>
+              <input 
+                type="text" 
+                formControlName="pais"
+                class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn-add" (click)="agregarDireccion()">
+        + Agregar Otra Dirección
+      </button>
+    </div>
+
+    <!-- Resumen del Perfil -->
+    <div class="resumen" *ngIf="perfilForm.valid">
+      <h3>📊 Resumen del Perfil</h3>
+      <p class="resumen-texto">{{ generarResumen() }}</p>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="perfilForm.invalid">
+      Guardar Perfil
+    </button>
+  </form>
+</div>

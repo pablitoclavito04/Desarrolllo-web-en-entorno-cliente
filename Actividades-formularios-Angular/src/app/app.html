@@ -1,0 +1,33 @@
+<div class="app-container">
+  <nav class="menu">
+    <h1>Actividades de Formularios Angular</h1>
+    <button (click)="actividadActual = 1" [class.active]="actividadActual === 1">
+      Actividad 1: Registro Template-Driven
+    </button>
+    <button (click)="actividadActual = 2" [class.active]="actividadActual === 2">
+      Actividad 2: Productos Reactivo
+    </button>
+    <button (click)="actividadActual = 3" [class.active]="actividadActual === 3">
+      Actividad 3: Factura con FormArray
+    </button>
+    <button (click)="actividadActual = 4" [class.active]="actividadActual === 4">
+      Actividad 4: Validación Asincrónica
+    </button>
+    <button (click)="actividadActual = 5" [class.active]="actividadActual === 5">
+      Actividad 5: Perfil Usuario Completo
+    </button>
+  </nav>
+
+  <div class="content">
+    <div *ngIf="actividadActual === 0" class="bienvenida">
+      <h2>👋 Bienvenido a las Actividades de Formularios Angular</h2>
+      <p>Selecciona una actividad del menú lateral para comenzar.</p>
+    </div>
+
+    <app-registro *ngIf="actividadActual === 1"></app-registro>
+    <app-actividad2-productos *ngIf="actividadActual === 2"></app-actividad2-productos>
+    <app-actividad3-factura *ngIf="actividadActual === 3"></app-actividad3-factura>
+    <app-actividad4-registro-avanzado *ngIf="actividadActual === 4"></app-actividad4-registro-avanzado>
+    <app-actividad5-perfil-usuario *ngIf="actividadActual === 5"></app-actividad5-perfil-usuario>
+  </div>
+</div>

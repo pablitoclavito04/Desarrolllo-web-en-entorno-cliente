@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.menu {
+  width: 320px;
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.menu h1 {
+  color: white;
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.menu button {
+  padding: 16px 18px;
+  background-color: #34495e;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.menu button:hover {
+  background-color: #3d5a6b;
+  transform: translateX(5px);
+  border-color: #4CAF50;
+}
+
+.menu button.active {
+  background-color: #4CAF50;
+  border-color: #45a049;
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  background-color: #ecf0f1;
+  overflow-y: auto;
+}
+
+.bienvenida {
+  text-align: center;
+  padding: 100px 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bienvenida h2 {
+  color: #2c3e50;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.bienvenida p {
+  color: #7f8c8d;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .menu {
+    width: 100%;
+  }
+}
