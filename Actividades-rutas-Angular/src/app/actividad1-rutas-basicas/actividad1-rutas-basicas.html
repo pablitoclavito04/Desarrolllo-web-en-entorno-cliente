@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>📌 Actividad 1: Rutas Básicas y routerLink</h2>
+  <p class="descripcion">
+    Navegación SPA (Single Page Application) usando RouterLink para alternar entre vistas sin recargar la página.
+  </p>
+
+  <nav class="submenu">
+    <a routerLink="/actividad1/inicio" routerLinkActive="active">🏠 Inicio</a>
+    <a routerLink="/actividad1/acerca" routerLinkActive="active">ℹ️ Acerca</a>
+  </nav>
+
+  <div class="vista-contenido">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="info-box">
+    <h4>🎯 Conceptos abordados:</h4>
+    <ul>
+      <li><strong>RouterModule:</strong> Sistema de navegación de Angular</li>
+      <li><strong>routerLink:</strong> Directiva para navegación declarativa</li>
+      <li><strong>routerLinkActive:</strong> Clase CSS aplicada a la ruta activa</li>
+      <li><strong>router-outlet:</strong> Placeholder donde se cargan los componentes</li>
+      <li><strong>Navegación SPA:</strong> Sin recargar la página completa</li>
+    </ul>
+  </div>
+</div>

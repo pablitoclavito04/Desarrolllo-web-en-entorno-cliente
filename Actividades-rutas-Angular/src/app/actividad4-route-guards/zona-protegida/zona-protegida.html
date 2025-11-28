@@ -1,0 +1,117 @@
+<div class="zona-protegida-container">
+  <header class="header-protegido">
+    <h1>🔐 Zona Protegida</h1>
+    <p class="subtitle">¡Felicidades! Has accedido a una ruta protegida</p>
+  </header>
+
+  <div class="content-wrapper">
+    <!-- Mensaje de bienvenida -->
+    <section class="welcome-section">
+      <div class="success-badge">✅</div>
+      <h2>Acceso Concedido</h2>
+      <p>Solo puedes ver este contenido porque estás <strong>autenticado</strong>.</p>
+      <div class="access-info">
+        <p><strong>Hora de acceso:</strong> {{ accessTime }}</p>
+      </div>
+    </section>
+
+    <!-- Información sobre la protección -->
+    <section class="info-section">
+      <h3>🛡️ Protección de esta Ruta</h3>
+      <div class="info-cards">
+        <div class="info-card">
+          <span class="icon">🔒</span>
+          <h4>AuthGuard Activo</h4>
+          <p>Esta ruta está protegida con <code>canActivate: [authGuard]</code></p>
+        </div>
+        <div class="info-card">
+          <span class="icon">🚫</span>
+          <h4>Sin Autenticación</h4>
+          <p>Los usuarios no autenticados son redirigidos automáticamente</p>
+        </div>
+        <div class="info-card">
+          <span class="icon">✅</span>
+          <h4>Verificación Continua</h4>
+          <p>El guard verifica el estado en cada navegación</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Funcionalidades -->
+    <section class="features-section">
+      <h3>📋 Funcionalidades Disponibles</h3>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">👤</span>
+          <h4>Perfil de Usuario</h4>
+          <p>Gestiona tu información personal</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚙️</span>
+          <h4>Configuración</h4>
+          <p>Ajusta las preferencias de tu cuenta</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <h4>Reportes</h4>
+          <p>Accede a estadísticas y análisis</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">💾</span>
+          <h4>Datos Privados</h4>
+          <p>Información sensible protegida</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explicación técnica -->
+    <section class="technical-section">
+      <h3>💻 Implementación Técnica</h3>
+      <div class="code-explanation">
+        <h4>En app.routes.ts:</h4>
+        <pre><code>&#123;
+  path: 'zona-protegida',
+  component: ZonaProtegidaComponent,
+  canActivate: [authGuard]  // ← Guard protege esta ruta
+&#125;</code></pre>
+        
+        <h4>El authGuard verifica:</h4>
+        <ul>
+          <li>✅ Si el usuario está autenticado → <strong>Permite acceso</strong></li>
+          <li>❌ Si NO está autenticado → <strong>Redirige a /actividad4</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Acciones -->
+    <section class="actions-section">
+      <h3>🎯 Acciones Disponibles</h3>
+      <div class="buttons-container">
+        <button class="btn btn-info" (click)="obtenerEstado()">
+          📊 Ver Estado de Autenticación
+        </button>
+        <button class="btn btn-danger" (click)="cerrarSesion()">
+          🚪 Cerrar Sesión
+        </button>
+        <a routerLink="/actividad4" class="btn btn-secondary">
+          🏠 Volver al Inicio
+        </a>
+      </div>
+    </section>
+
+    <!-- Advertencia -->
+    <section class="warning-section">
+      <div class="warning-box">
+        <span class="warning-icon">⚠️</span>
+        <div class="warning-content">
+          <h4>Importante:</h4>
+          <p>Si cierras sesión, perderás el acceso a esta zona protegida y serás redirigido a la página principal.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer-protegido">
+    <p>🛡️ Actividad 4: Route Guards - Zona Protegida con CanActivate</p>
+  </footer>
+</div>

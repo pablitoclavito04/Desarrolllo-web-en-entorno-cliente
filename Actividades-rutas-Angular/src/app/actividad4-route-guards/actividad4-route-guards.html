@@ -1,0 +1,117 @@
+<div class="container">
+  <h2>🛡️ Actividad 4: Route Guards (CanActivate)</h2>
+  <p class="description">
+    Implementación de guards para proteger rutas y controlar el acceso mediante autenticación.
+  </p>
+
+  <!-- Estado de autenticación -->
+  <div class="status-banner" [class.authenticated]="isAuthenticated" [class.not-authenticated]="!isAuthenticated">
+    <span *ngIf="isAuthenticated">✅ Sesión iniciada</span>
+    <span *ngIf="!isAuthenticated">🔒 No has iniciado sesión</span>
+  </div>
+
+  <!-- Formulario de Login -->
+  <div class="login-section" *ngIf="!isAuthenticated">
+    <h3>🔑 Iniciar Sesión</h3>
+    
+    <form (submit)="onLogin($event)" class="login-form">
+      <div class="form-group">
+        <label>Usuario:</label>
+        <input
+          type="text"
+          #username
+          name="username"
+          placeholder="admin"
+          class="form-control"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña:</label>
+        <input
+          type="password"
+          #password
+          name="password"
+          placeholder="1234"
+          class="form-control"
+          required>
+      </div>
+
+      <div *ngIf="loginError" class="error-message">
+        ❌ Credenciales incorrectas. Intenta con: <strong>admin / 1234</strong>
+      </div>
+
+      <button type="submit" class="btn-login">
+        🔓 Iniciar Sesión
+      </button>
+    </form>
+
+    <div class="credentials-hint">
+      <p>💡 <strong>Credenciales de prueba:</strong></p>
+      <p>Usuario: <code>admin</code> | Contraseña: <code>1234</code></p>
+    </div>
+  </div>
+
+  <!-- Panel de usuario autenticado -->
+  <div class="authenticated-section" *ngIf="isAuthenticated">
+    <h3>✅ ¡Bienvenido!</h3>
+    <p>Has iniciado sesión correctamente. Ahora puedes acceder a la zona protegida.</p>
+
+    <div class="actions">
+      <button class="btn-protected" (click)="goToProtected()">
+        🛡️ Ir a Zona Protegida
+      </button>
+      <button class="btn-logout" (click)="onLogout()">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </div>
+
+  <!-- Información de la actividad -->
+  <div class="info-box">
+    <h4>📚 Conceptos abordados:</h4>
+    <ul>
+      <li><strong>CanActivate:</strong> Guard funcional que protege rutas</li>
+      <li><strong>AuthService:</strong> Servicio de autenticación simulada</li>
+      <li><strong>inject():</strong> Inyección de dependencias en guards funcionales</li>
+      <li><strong>Router.navigate():</strong> Redirección programática</li>
+    </ul>
+  </div>
+
+  <!-- Explicación técnica -->
+  <div class="technical-info">
+    <h4>🔧 Implementación Técnica</h4>
+    <div class="code-block">
+      <h5>En app.routes.ts:</h5>
+      <pre><code>&#123;
+  path: 'zona-protegida',
+  component: ZonaProtegidaComponent,
+  canActivate: [authGuard]  // ← Guard protege esta ruta
+&#125;</code></pre>
+    </div>
+
+    <div class="code-block">
+      <h5>En auth.guard.ts:</h5>
+      <pre><code>export const authGuard: CanActivateFn = (route, state) => &#123;
+  const authService = inject(AuthService);
+  
+  if (authService.isLoggedIn()) &#123;
+    return true;  // Permite acceso
+  &#125;
+  
+  return router.createUrlTree(['/actividad4']);  // Redirige
+&#125;;</code></pre>
+    </div>
+  </div>
+
+  <!-- Instrucciones -->
+  <div class="instructions">
+    <h4>🧪 Cómo Probar:</h4>
+    <ol>
+      <li>Intenta acceder a la <strong>Zona Protegida</strong> sin hacer login (serás bloqueado)</li>
+      <li>Inicia sesión con <code>admin</code> / <code>1234</code></li>
+      <li>Ahora sí podrás acceder a la Zona Protegida</li>
+      <li>Cierra sesión y verifica que ya no tienes acceso</li>
+    </ol>
+  </div>
+</div>

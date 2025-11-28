@@ -1,0 +1,62 @@
+<div class="container">
+  <h2>⚡ Actividad 3: Lazy Loading de Módulos</h2>
+  <p class="descripcion">
+    Implementación de carga perezosa (lazy loading) para cargar módulos bajo demanda y optimizar el bundle inicial de la aplicación.
+  </p>
+
+  <div class="demo-section">
+    <h3>🎯 Demostración de Lazy Loading</h3>
+    <p>El módulo de administración se carga <strong>solo cuando haces clic</strong> en el botón de abajo.</p>
+    
+    <div class="instrucciones">
+      <h4>📋 Para verificar el lazy loading:</h4>
+      <ol>
+        <li>Abre las <strong>DevTools (F12)</strong></li>
+        <li>Ve a la pestaña <strong>"Network"</strong></li>
+        <li>Haz clic en el botón "Acceder al Panel de Admin"</li>
+        <li>Observa cómo se descarga un nuevo archivo <code>.js</code> (el chunk del módulo admin)</li>
+      </ol>
+    </div>
+
+    <a routerLink="/admin" class="btn-admin">
+      🔐 Acceder al Panel de Admin
+    </a>
+  </div>
+
+  <div class="info-box">
+    <h4>🎯 Conceptos abordados:</h4>
+    <ul>
+      <li><strong>Lazy Loading:</strong> Carga de módulos bajo demanda</li>
+      <li><strong>loadChildren:</strong> Función para cargar módulos dinámicamente</li>
+      <li><strong>Feature Modules:</strong> Módulos con funcionalidades específicas</li>
+      <li><strong>Code Splitting:</strong> División del código en múltiples bundles</li>
+      <li><strong>Optimización:</strong> Reducción del tamaño del bundle inicial</li>
+    </ul>
+  </div>
+
+  <div class="benefits">
+    <h4>✨ Beneficios del Lazy Loading:</h4>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="icon">🚀</div>
+        <h5>Carga Inicial Rápida</h5>
+        <p>Solo se carga el código necesario al inicio</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📦</div>
+        <h5>Bundles Más Pequeños</h5>
+        <p>El código se divide en chunks más manejables</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">⚡</div>
+        <h5>Mejor Performance</h5>
+        <p>Mejora el tiempo de carga percibido</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🎯</div>
+        <h5>Carga Bajo Demanda</h5>
+        <p>Los módulos se cargan solo cuando se necesitan</p>
+      </div>
+    </div>
+  </div>
+</div>
